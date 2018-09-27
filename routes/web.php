@@ -11,4 +11,5 @@
 |
 */
 
-Route::resource('/','IndexController');//
+Route::resource('/','IndexController');//首页
+Route::resource('/app','AppController');//APP下载

@@ -6,6 +6,7 @@
         <title>
             @yield('title', '资讯')
         </title>
+        <link rel="shortcut icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         name="viewport">
@@ -161,7 +162,7 @@
             </script>
             <div class="container">
                 <div class="navbar-header transition">
-                    <a href="#" title="首页">
+                    <a href="/" title="首页">
                         <img src="{{ asset('/public/default/home/tpl/images/logo.jpg') }}" alt="虎嗅网"
                         title="首页" />
                     </a>
@@ -179,13 +180,13 @@
                                 </span>
                                 <br>
                                 <span>
-                                    下载虎嗅APP
+                                    下载资讯APP
                                 </span>
                             </div>
                         </div>
                         <i class="icon icon-sm-phone">
                         </i>
-                        APP下载
+                        <a href='/app'>APP下载</a>
                         <em class="guide-prompt">
                         </em>
                     </li>
