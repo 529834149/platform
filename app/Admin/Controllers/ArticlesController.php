@@ -101,9 +101,11 @@ class ArticlesController extends Controller
 
             $form->display('id', 'ID');
             $form->select('cate_id','父级ID')->options(Categories::selectOptions());
-            $form->text('title', '文章标题')->placeholder('请输入文章标题');;
+            $form->text('title', '文章标题')->placeholder('请输入文章标题');
             $form->textarea('summary', '文章简介')->rows(5)->placeholder('请输入文章简介');
             $form->image('pic', '上传文章首图')->uniqueName();
+            $form->select('article_pic_status','文章首图状态')->options(['big_picture'=> '大图', 'small_picture' => '小图','no_picture' => '无图']);
+            $form->image('author_pic', '文章作者头像')->uniqueName();
             $form->editor('body', '文章内容');
             $form->date('add_time','添加时间')->format('YYYY-MM-DD HH:mm:ss');
             $form->text('author', '文章作者')->placeholder('请输入文章作者');
@@ -121,6 +123,7 @@ class ArticlesController extends Controller
             ];
             $form->switch('is_hot','是否设置热火')->states($states_hot)->placeholder('是否设置热火');
             $form->date('hot_time','推荐时间')->format('YYYY-MM-DD HH:mm:ss');
+           
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
             $form->saving(function (Form $form) {
