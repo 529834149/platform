@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Article;
 use App\Models\Categories;
+use App\Models\Tag;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
@@ -15,9 +16,7 @@ use Illuminate\Support\MessageBag;
 use Encore\Admin\Grid\Tools\BatchActions as BatchActions;
 use Encore\Admin\Auth\Permission;
 use Encore\Admin\Grid\Column;
-use Illuminate\Http\Request;
-
-class ArticlesController extends Controller
+class PostController extends Controller
 {
     use ModelForm;
 
@@ -79,6 +78,7 @@ class ArticlesController extends Controller
     {
         return Admin::grid(Article::class, function (Grid $grid) {
             $grid->id('ID')->sortable();
+            $grid->article_pic_status('类型')->sortable();
 //            $grid->title('标题')->limit(20)->ucfirst()->substr(1, 10)->sortable();
             $grid->title('标题')->display(function($text) {
                 return str_limit($text, 30, '...');
@@ -123,15 +123,19 @@ class ArticlesController extends Controller
             ];
             $form->switch('is_hot','是否设置热火')->states($states_hot)->placeholder('是否设置热火');
             $form->date('hot_time','推荐时间')->format('YYYY-MM-DD HH:mm:ss');
-           
+            $form->select('tag','标签')->options(Tag::all()->pluck('name', 'id'));
+//            $form->select('tag','标签')->options(function ($ids) {
+//                return Tag::find($ids)->pluck('name', 'id');
+//            })->ajax('/admin/tags_info');
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
-            $form->saving(function (Form $form) {
-                $form->add_time = intval(strtotime($form->add_time));
-                $form->hot_time = intval(strtotime($form->hot_time));
-                $form->publish_time = intval(strtotime($form->publish_time));
-            });
         });
+    }
+    //tag 标签数量多可以采用分页形式
+    public function tags_info(Request $request)
+    {
+        $q = $request->get('q');
+        return Tag::where('name', 'like', "%$q%")->paginate(null, ['id', 'name as text']);
     }
     public function uploads(Request $request)
     {

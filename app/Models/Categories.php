@@ -20,5 +20,9 @@ class Categories extends Model
 //        $this->setOrderColumn('sort');
 //        $this->setTitleColumn('name');
 //    }
+    public function article()
+    {
+        return $this->hasMany('App\Models\Article','cate_id','id');
+    }
    
 }

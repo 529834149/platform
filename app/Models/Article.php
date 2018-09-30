@@ -10,6 +10,13 @@ class Article extends Model
     protected $primaryKey = 'id';//定义主键
     protected $guarded = [];//忽略那些字段被插入 
     // protected $primaryKey = '';//定义主键  
-    // public $timestamps = false;//类似addtime updatetime  
-   
+    public $timestamps = false;//类似addtime updatetime  
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+    public function categories()
+    {
+        return $this->hasMany('App\Models\Categories','cate_id','id');
+    }
 }
